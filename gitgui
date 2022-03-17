@@ -138,6 +138,10 @@ def do_down(e=0):
 	global fil_l
 	fil_l.focus()
 
+def do_re(e=0):
+	scan()
+	ls()
+
 tk = Tk()
 tk.title('gitgui 0.0.1 by J.Justra 17.3.2021')
 
@@ -148,6 +152,7 @@ tk.bind('<Alt-c>',do_com)
 tk.bind('<Alt-p>',do_psh)
 tk.bind('<Up>',do_up)
 tk.bind('<Down>',do_down)
+tk.bind('<F5>',do_re)
 
 fil_l=Listbox(tk)
 ign_b = Button(tk,text='Ignore (Alt+i)',command=do_ign)
