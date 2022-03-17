@@ -31,7 +31,7 @@ def scan():
 		if m == '??': m = '?'
 		all_l.append((m,fn))
 
-def list():
+def ls():
 	global all_l,ign_l,fil_l
 
 	i = 0
@@ -77,7 +77,7 @@ def do_ign(e=0):
 		ign_l.pop(ign_l.index(fn))
 		log('unignored : '+fn)
 
-	list()
+	ls()
 
 def do_com(e=0,check_msg=0):
 	global ign_l,com_e
@@ -110,7 +110,7 @@ def do_com(e=0,check_msg=0):
 	com_e.delete(0,END)
 
 	scan()
-	list()
+	ls()
 
 	return 1
 
@@ -164,7 +164,7 @@ psh_b.grid(sticky='NEWS')
 log_t.grid(sticky='NEWS')
 
 scan()
-list()
+ls()
 log('gui ready')
 
 tk.mainloop()
