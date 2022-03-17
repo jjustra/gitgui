@@ -107,6 +107,7 @@ def do_com(e=0,check_msg=0):
 	so = Popen(['git','commit','-m',msg],stdout=PIPE).communicate()[0]
 #	print l,msg
 	log(so,1)
+	com_e.delete(1.0,END)
 
 	scan()
 	list()
