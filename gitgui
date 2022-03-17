@@ -18,6 +18,8 @@ ign_l = []
 def scan():
 	global all_l
 
+	log('statusing ...')
+
 	all_l = []
 	so = Popen(['git','status','--short'],stdout=PIPE).communicate()[0]
 
@@ -162,5 +164,6 @@ log_t.grid(sticky='NEWS')
 
 scan()
 list()
+log('gui ready')
 
 tk.mainloop()
