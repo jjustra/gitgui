@@ -1,0 +1,166 @@
+#!/bin/python
+
+# git front end for fast aned easy usage
+
+# alt+i ignore selected files
+# alt+c commit (stage all not-ignored files)
+# alt+p push (does auto-commit)
+
+
+from subprocess import Popen,PIPE
+from Tkinter import *
+
+
+all_l = []
+ign_l = []
+
+
+def scan():
+	global all_l
+
+	all_l = []
+	so = Popen(['git','status','--short'],stdout=PIPE).communicate()[0]
+
+	for ln in so.split('\n'):
+		ln = ln.strip()
+		if not ln: continue
+
+		m,fn = ln.split(' ',1)
+		if m == '??': m = '?'
+		all_l.append((m,fn))
+
+def list():
+	global all_l,ign_l,fil_l
+
+	i = 0
+
+	# get selected index
+	s = fil_l.get(ACTIVE)
+	if s:
+		i = fil_l.get(0,END).index(s)
+
+	# refresh
+	fil_l.delete(0,END)
+	for t in all_l:
+		m,fn = t
+		if fn in ign_l: m = 'I'
+		fil_l.insert(END,'%s %s'%(m,fn))
+
+	fil_l.selection_clear(0,END)
+	fil_l.see(i)
+	fil_l.activate(i)
+	fil_l.selection_set(i)
+	fil_l.selection_anchor(i)
+
+def log(s,add=0):
+	global log_t
+	if not add:
+		log_t.delete(1.0,END)
+	log_t.insert(END,s)
+
+def quit(e=0):
+	tk.destroy()
+
+def do_ign(e=0):
+	global fil_l,ign_l
+
+	# get selected filename
+	fn = fil_l.get(ACTIVE).split(' ',1)[1]
+
+	# add or remove - ignore list
+	if fn not in ign_l:
+		ign_l.append(fn)
+		log('ignored : '+fn)
+	else:
+		ign_l.pop(ign_l.index(fn))
+		log('unignored : '+fn)
+
+	list()
+
+def do_com(e=0,check_msg=0):
+	global ign_l,com_e
+
+	# workflow sugar
+	if com_e.focus_get() != com_e:
+		if not check_msg or not com_e.get():
+			com_e.focus()
+			return 0
+
+	log('commiting ...')
+
+	l = []
+
+	# filter ignored files
+	for t in all_l:
+		m,fn = t
+		if fn not in ign_l:
+			l.append(fn)
+
+	if l:
+		# stage files
+		so = Popen(['git','add']+l,stdout=PIPE).communicate()[0]
+		log(so)
+
+	msg = com_e.get()
+	so = Popen(['git','commit','-m',msg],stdout=PIPE).communicate()[0]
+#	print l,msg
+	log(so,1)
+
+	scan()
+	list()
+
+	return 1
+
+def do_psh(e=0):
+	# clear log
+	log('')
+
+	# do commit (abort only if commit msg empty)
+	if do_com(0,1) == 0:
+		# no commit message
+		return
+
+	# push
+	log('pushing ...')
+	so,se = Popen(['git','push'],stdout=PIPE,stderr=PIPE).communicate()
+	log(so,1)
+	log(se,1)
+
+def do_up(e=0):
+	global fil_l
+	fil_l.focus()
+def do_down(e=0):
+	global fil_l
+	fil_l.focus()
+
+tk = Tk()
+tk.title('gitgui 0.0.1 by J.Justra 17.3.2021')
+
+
+tk.bind('<Escape>',quit)
+tk.bind('<Alt-i>',do_ign)
+tk.bind('<Alt-c>',do_com)
+tk.bind('<Alt-p>',do_psh)
+tk.bind('<Up>',do_up)
+tk.bind('<Down>',do_down)
+
+fil_l=Listbox(tk)
+ign_b = Button(tk,text='Ignore (Alt+i)',command=do_ign)
+com_e = Entry(tk)
+com_b = Button(tk,text='Commit (Alt+c)',command=do_com)
+psh_b = Button(tk,text='Push (Alt+p)',command=do_psh)
+
+log_t=Text(tk,width=40,height=10)
+
+
+fil_l.grid(sticky='NEWS')
+ign_b.grid(sticky='NEWS')
+com_e.grid(sticky='NEWS')
+com_b.grid(sticky='NEWS')
+psh_b.grid(sticky='NEWS')
+log_t.grid(sticky='NEWS')
+
+scan()
+list()
+
+tk.mainloop()
