@@ -31,6 +31,8 @@ def scan():
 		if m == '??': m = '?'
 		all_l.append((m,fn))
 
+	log('done')
+
 def ls():
 	global all_l,ign_l,fil_l
 
@@ -165,6 +167,6 @@ log_t.grid(sticky='NEWS')
 
 scan()
 ls()
-log('gui ready')
+log('ready')
 
 tk.mainloop()
