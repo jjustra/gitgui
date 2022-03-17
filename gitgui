@@ -33,7 +33,7 @@ def scan():
 
 	log('done')
 
-def ls():
+def list():
 	global all_l,ign_l,fil_l
 
 	i = 0
@@ -79,7 +79,7 @@ def do_ign(e=0):
 		ign_l.pop(ign_l.index(fn))
 		log('unignored : '+fn)
 
-	ls()
+	list()
 
 def do_com(e=0,check_msg=0):
 	global ign_l,com_e
@@ -112,7 +112,7 @@ def do_com(e=0,check_msg=0):
 	com_e.delete(0,END)
 
 	scan()
-	ls()
+	list()
 
 	return 1
 
@@ -140,7 +140,7 @@ def do_down(e=0):
 
 def do_re(e=0):
 	scan()
-	ls()
+	list()
 
 tk = Tk()
 tk.title('gitgui 0.0.1 by J.Justra 17.3.2021')
@@ -171,7 +171,7 @@ psh_b.grid(sticky='NEWS')
 log_t.grid(sticky='NEWS')
 
 scan()
-ls()
+list()
 log('ready')
 
 tk.mainloop()
