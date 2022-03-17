@@ -88,7 +88,7 @@ def do_com(e=0,check_msg=0):
 	if com_e.focus_get() != com_e:
 		if not check_msg or not com_e.get():
 			com_e.focus()
-			return 0
+			return
 
 	log('commiting ...')
 
@@ -114,16 +114,12 @@ def do_com(e=0,check_msg=0):
 	scan()
 	list()
 
-	return 1
-
 def do_psh(e=0):
 	# clear log
 	log('')
 
-	# do commit (abort only if commit msg empty)
-	if do_com(0,1) == 0:
-		# no commit message
-		return
+	# do commit (only if commit msg not empty)
+	do_com(0,1)
 
 	# push
 	log('pushing ...')
@@ -143,7 +139,7 @@ def do_re(e=0):
 	list()
 
 tk = Tk()
-tk.title('gitgui 0.0.1 by J.Justra 17.3.2021')
+tk.title('gitgui 0.0.2 by J.Justra 17.3.2021')
 
 
 tk.bind('<Escape>',quit)
