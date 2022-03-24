@@ -142,7 +142,7 @@ def do_re(e=0):
 	list()
 
 tk = Tk()
-tk.title('gitgui 0.0.2 by J.Justra 17.3.2021')
+tk.title('gitgui 0.0.3 by J.Justra 24.3.2021')
 
 
 tk.bind('<Escape>',quit)
