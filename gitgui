@@ -94,6 +94,10 @@ def do_com(e=0,check_msg=0):
 
 	l = []
 
+	# get commit message
+	msg = com_e.get()
+	if not msg: return log('missing commit message',1)
+
 	# filter ignored files
 	for t in all_l:
 		m,fn = t
@@ -105,7 +109,6 @@ def do_com(e=0,check_msg=0):
 		so = Popen(['git','add']+l,stdout=PIPE).communicate()[0]
 		log(so)
 
-	msg = com_e.get()
 	so = Popen(['git','commit','-m',msg],stdout=PIPE).communicate()[0]
 #	print l,msg
 	log(so,1)
