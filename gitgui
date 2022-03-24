@@ -18,7 +18,7 @@ ign_l = []
 def scan():
 	global all_l
 
-	log('statusing ...',1)
+	log('statusing ... ',1)
 
 	all_l = []
 	so = Popen(['git','status','--short'],stdout=PIPE).communicate()[0]
@@ -31,7 +31,7 @@ def scan():
 		if m == '??': m = '?'
 		all_l.append((m,fn))
 
-	log('done',1)
+	log('done\n',1)
 
 def list():
 	global all_l,ign_l,fil_l
