@@ -111,7 +111,7 @@ def do_com(e=0,check_msg=0):
 	if l:
 		# stage files
 		so = Popen(['git','add']+l,stdout=PIPE).communicate()[0]
-		log(so)
+		log(so,1)
 
 	so = Popen(['git','commit','-m',msg],stdout=PIPE).communicate()[0]
 #	print l,msg
@@ -125,15 +125,15 @@ def do_psh(e=0):
 	# clear log
 	log('')
 
+	# do commit (only if commit msg not empty)
+	do_com(0,1)
+
 	# rescan - just in case
 	scan()
 	list()
 
-	# do commit (only if commit msg not empty)
-	do_com(0,1)
-
 	# push
-	log('pushing ... ')
+	log('pushing ... ', 1)
 	so,se = Popen(['git','push'],stdout=PIPE,stderr=PIPE).communicate()
 	log(so,1)
 	log(se,1)
