@@ -9,6 +9,7 @@
 
 from subprocess import Popen,PIPE
 from Tkinter import *
+from os.path import realpath, basename
 
 
 all_l = []
@@ -150,7 +151,8 @@ def do_re(e=0):
 	list()
 
 tk = Tk()
-tk.title('gitgui 0.0.4 by J.Justra 18.4.2021')
+repo_name = basename(realpath('.'))
+tk.title('['+repo_name + '] gitgui 0.0.4 by J.Justra 18.4.2021')
 
 
 tk.bind('<Escape>',quit)
