@@ -58,10 +58,13 @@ def list():
 	fil_l.selection_anchor(i)
 
 def log(s,add=0):
-	global log_t
+	global log_t, tk
+
 	if not add:
 		log_t.delete(1.0,END)
+
 	log_t.insert(END,s)
+	tk.update_idletasks()
 
 def quit(e=0):
 	tk.destroy()
