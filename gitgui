@@ -74,10 +74,10 @@ def do_ign(e=0):
 	# add or remove - ignore list
 	if fn not in ign_l:
 		ign_l.append(fn)
-		log('ignored : '+fn)
+		log('ignored : '+fn+'\n')
 	else:
 		ign_l.pop(ign_l.index(fn))
-		log('unignored : '+fn)
+		log('unignored : '+fn+'\n')
 
 	list()
 
@@ -90,13 +90,17 @@ def do_com(e=0,check_msg=0):
 			com_e.focus()
 			return
 
-	log('commiting ...')
+	# rescan - just in case
+	scan()
+	list()
+
+	log('commiting ... ')
 
 	l = []
 
 	# get commit message
 	msg = com_e.get()
-	if not msg: return log('missing commit message',1)
+	if not msg: return log('missing commit message\n',1)
 
 	# filter ignored files
 	for t in all_l:
@@ -121,11 +125,15 @@ def do_psh(e=0):
 	# clear log
 	log('')
 
+	# rescan - just in case
+	scan()
+	list()
+
 	# do commit (only if commit msg not empty)
 	do_com(0,1)
 
 	# push
-	log('pushing ...')
+	log('pushing ... ')
 	so,se = Popen(['git','push'],stdout=PIPE,stderr=PIPE).communicate()
 	log(so,1)
 	log(se,1)
@@ -171,6 +179,6 @@ log_t.grid(sticky='NEWS')
 
 scan()
 list()
-log('ready')
+log('ready\n')
 
 tk.mainloop()
