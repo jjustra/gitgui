@@ -155,7 +155,7 @@ def do_re(e=0):
 
 tk = Tk()
 repo_name = basename(realpath('.'))
-tk.title('['+repo_name + '] gitgui 0.0.4 by J.Justra 18.4.2021')
+tk.title('['+repo_name + '] gitgui 0.0.5 by J.Justra 24.4.2021')
 
 
 tk.bind('<Escape>',quit)
@@ -185,5 +185,6 @@ log_t.grid(sticky='NEWS')
 scan()
 list()
 log('ready\n')
+com_e.focus_force()
 
 tk.mainloop()
