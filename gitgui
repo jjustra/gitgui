@@ -1,6 +1,6 @@
-#!/bin/python
+#!/usr/bin/env python
 
-# git front end for fast aned easy usage
+# git front end for fast and easy usage
 
 # alt+i ignore selected files
 # alt+c commit (stage all not-ignored files)
@@ -8,7 +8,7 @@
 
 
 from subprocess import Popen,PIPE
-from Tkinter import *
+from tkinter import *
 from os.path import realpath, basename
 
 
@@ -24,8 +24,8 @@ def scan():
 	all_l = []
 	so = Popen(['git','status','--short'],stdout=PIPE).communicate()[0]
 
-	for ln in so.split('\n'):
-		ln = ln.strip()
+	for ln in so.split(b'\n'):
+		ln = ln.decode().strip()
 		if not ln: continue
 
 		m,fn = ln.split(' ',1)
