@@ -6,9 +6,12 @@
 # alt+c commit (stage all not-ignored files)
 # alt+p push (does auto-commit)
 
-
+try:
+	from tkinter import *
+except ImportError:
+	# Retro for python 2
+	from Tkinter import *
 from subprocess import Popen,PIPE
-from tkinter import *
 from os.path import realpath, basename
 
 
@@ -155,7 +158,7 @@ def do_re(e=0):
 
 tk = Tk()
 repo_name = basename(realpath('.'))
-tk.title('['+repo_name + '] gitgui 0.0.5 by J.Justra 24.4.2021')
+tk.title('['+repo_name + '] gitgui 0.0.6 by J.Justra 7.6.2022')
 
 
 tk.bind('<Escape>',quit)
