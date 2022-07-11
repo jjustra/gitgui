@@ -187,7 +187,7 @@ log_t.grid(sticky='NEWS')
 
 scan()
 list()
-log('ready\n')
+log('ready\nF5 for refresh')
 com_e.focus_force()
 
 tk.mainloop()
