@@ -158,7 +158,7 @@ def do_re(e=0):
 
 tk = Tk()
 repo_name = basename(realpath('.'))
-tk.title('['+repo_name + '] gitgui 0.0.6 by J.Justra 7.6.2022')
+tk.title('['+repo_name + '] gitgui 0.0.7 by J.Justra 11.7.2022')
 
 
 tk.bind('<Escape>',quit)
